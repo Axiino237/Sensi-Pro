@@ -172,35 +172,46 @@ h2 { font-size: 1.25rem; font-weight: 700; color: var(--text-main); letter-spaci
 
 .form-group label {
   display: block;
-  margin-bottom: 0.75rem;
-  font-size: 0.9rem;
+  margin-bottom: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 
 select, input {
   width: 100%;
   background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border-glass);
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  padding: 1.1rem 1.4rem;
   color: white;
   font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
   transition: var(--transition);
   appearance: none;
   -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Fix for mobile dropdown appearance */
+@media (max-width: 480px) {
+  select, input {
+    font-size: 16px; /* Prevents auto-zoom on iOS */
+    padding: 0.95rem 1.2rem;
+  }
 }
 
 select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ff4d00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ff4d00' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 1.2em;
-  padding-right: 3rem;
+  background-position: right 1.25rem center;
+  background-size: 1.1em;
+  padding-right: 3.5rem;
   cursor: pointer;
 }
 
@@ -265,4 +276,40 @@ optgroup {
 
 .animate-enter {
   animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Elite Toolbox Styles */
+.toolbox-card {
+  border-left: 4px solid var(--primary);
+  background: rgba(255, 77, 0, 0.03);
+}
+
+.toolbox-card:hover {
+  background: rgba(255, 77, 0, 0.08);
+}
+
+.fix-aim-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+}
+
+.fix-aim-btn:hover {
+  border-color: var(--primary);
+  color: white;
+  background: rgba(255, 77, 0, 0.05);
+}
+
+.fix-aim-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
 }

@@ -1,69 +1,78 @@
 /**
- * Perfected Sensitivity Calculation Engine (v3.0 - Pro Series)
- * Core Factors: RAM, DPI, devicePixelRatio (Screen Density), and Surface Friction.
+ * FF Sensi Pro v1.1 Elite Engine
+ * Dynamic Sensitivity & Fire Button Logic
  */
 
-export const calculateSensitivity = ({ deviceType, dpi, playStyle, surfaceType }) => {
-  // Base sensitivity mapping by device performance
-  const baseSens = {
-    low: { general: 98, redDot: 96, scope2x: 92, scope4x: 88, sniper: 72, freeLook: 85 },
-    mid: { general: 95, redDot: 92, scope2x: 88, scope4x: 84, sniper: 64, freeLook: 78 },
-    high: { general: 90, redDot: 86, scope2x: 82, scope4x: 78, sniper: 52, freeLook: 68 },
+export const REFRESH_RATE_FACTORS = {
+  '60': 1.0,
+  '90': 1.06,
+  '120': 1.12,
+  '144': 1.18
+};
+
+export const SCREEN_SIZE_FACTORS = {
+  'compact': 1.05, // Small screens need slightly higher general mobility
+  'large': 1.0,
+  'tablet': 0.88   // Tablets have massive drag space, lower general helps precision
+};
+
+export const calculateSensitivity = (data) => {
+  const { deviceType, dpi, playStyle, surfaceType, refreshRate, screenSize } = data;
+  
+  // Base sensitivity per device tier
+  const bases = {
+    low: { gen: 95, red: 90, x2: 85, x4: 80, sniper: 50, freeLook: 70 },
+    mid: { gen: 88, red: 82, x2: 78, x4: 72, sniper: 45, freeLook: 60 },
+    high: { gen: 82, red: 75, x2: 70, x4: 65, sniper: 40, freeLook: 55 }
   };
 
-  const sens = { ...baseSens[deviceType] };
-
-  // 📐 ADVANCED: Resolution Scaling Factoring
-  // High pixel density requires slightly more sensitivity for the same finger travel
-  const screenScale = window.devicePixelRatio || 2;
-  const resolutionBonus = Math.max(0, (screenScale - 1) * 2);
+  let sns = { ...bases[deviceType] };
   
-  Object.keys(sens).forEach(key => {
-    sens[key] = Math.round(sens[key] + resolutionBonus);
-  });
-
-  // 🎯 DPI Adjustment (Optimized for 400-1200 range)
+  // 1. DPI Factor (Inverse relationship - higher DPI needs lower in-game sensi)
   const dpiNum = parseInt(dpi) || 440;
-  const dpiFactor = Math.max(0, (dpiNum - 440) / 100); 
+  const dpiMultiplier = 440 / dpiNum;
   
-  Object.keys(sens).forEach(key => {
-    sens[key] = Math.max(10, Math.min(100, Math.round(sens[key] - (dpiFactor * 3.5))));
+  // 2. Playstyle Factor
+  const styleMultipliers = {
+    balanced: 1.0,
+    rush: 1.15,
+    sniper_pro: 0.85,
+    raistar: 1.25,
+    tsg_jash: 1.1,
+    white444: 1.2
+  };
+  const styleM = styleMultipliers[playStyle] || 1.0;
+
+  // 3. Surface Friction Factor
+  const surfaceM = surfaceType === 'glove' ? 0.95 : 1.05;
+
+  // 4. ELITE v1.1 factors (Hz and Size)
+  const hzM = REFRESH_RATE_FACTORS[refreshRate] || 1.0;
+  const sizeM = SCREEN_SIZE_FACTORS[screenSize] || 1.0;
+
+  // Apply all multipliers
+  Object.keys(sns).forEach(key => {
+    sns[key] = Math.round(sns[key] * dpiMultiplier * styleM * surfaceM * hzM * sizeM);
+    sns[key] = Math.max(1, Math.min(100, sns[key])); // Clamp between 1-100
   });
 
-  // 🧤 Friction Compensation
-  // Finger sleeves/Glove reduces friction significantly -> needs lower sens for control
-  if (surfaceType === 'glove') {
-    sens.general = Math.max(10, sens.general - 4);
-    sens.redDot = Math.max(10, sens.redDot - 4);
-  } else if (surfaceType === 'powder') {
-    sens.general = Math.min(100, sens.general + 2);
-  }
+  return sns;
+};
 
-  // 🏆 Legendary Player Presets
-  switch (playStyle) {
-    case 'raistar':
-      sens.general = 100;
-      sens.redDot = 98;
-      sens.scope2x = 94;
-      break;
-    case 'tsg_jash':
-      sens.general = 94;
-      sens.scope4x = Math.min(100, sens.scope4x + 12);
-      break;
-    case 'white444':
-      sens.sniper = 88;
-      sens.scope4x = 96;
-      sens.general = 82; 
-      break;
-    case 'rush':
-      sens.general = Math.min(100, sens.general + 7);
-      sens.redDot = Math.min(100, sens.redDot + 10);
-      break;
-    case 'sniper_pro':
-      sens.sniper = Math.min(100, sens.sniper + 25);
-      sens.general = Math.max(40, sens.general - 15);
-      break;
-  }
-
-  return sens;
+export const calculateFireButton = (data) => {
+  const { deviceType, screenSize } = data;
+  
+  // Base sizes
+  let size = 48;
+  if (deviceType === 'low') size = 42;
+  if (deviceType === 'high') size = 52;
+  
+  // Adjust for screen size
+  if (screenSize === 'tablet') size += 8;
+  if (screenSize === 'compact') size -= 5;
+  
+  return {
+    size: Math.round(size),
+    position: "Lower Right Quadrant (3/4 from top, alignment with thumb tip)"
+  };
 };
