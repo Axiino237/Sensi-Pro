@@ -135,6 +135,14 @@ const App = () => {
       )}
 
       <div className="container" style={{ paddingTop: '2rem' }}>
+        {/* 📥 TOP AD SECTION */}
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <div style={{ opacity: 0.4, fontSize: '0.65rem', marginBottom: '8px', letterSpacing: '2px' }}>ADVERTISEMENT</div>
+          <div className="glass" style={{ height: '90px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: '728px', margin: '0 auto', border: '1px dashed rgba(255,255,255,0.1)' }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>[ 💰 Top Leaderboard Ad Unit ]</p>
+          </div>
+        </div>
+
         <header style={{ textAlign: 'center', marginBottom: '5rem' }} className="animate-enter">
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '25px' }}>
              <div id="app-logo-container" className="animate-float" style={{ 
@@ -217,6 +225,13 @@ const App = () => {
                   <Crosshair size={18} color="var(--primary)" /><span>Sensi optimized for <b>{formData.refreshRate}Hz</b> & <b>{formData.screenSize}</b>.</span>
                 </div>
                 
+                {/* 💰 Results Internal Ad */}
+                <div style={{ margin: '1rem 0' }}>
+                  <div className="glass" style={{ height: '70px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(255,255,255,0.05)' }}>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.7rem' }}>[ 💰 Results Inline Ad Unit ]</p>
+                  </div>
+                </div>
+
                 {/* Fire Button Results */}
                 <div className="glass toolbox-card" style={{ padding: '1.25rem', borderRadius: '18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div>
@@ -242,11 +257,24 @@ const App = () => {
                 </div>
               </div>
             )}
+            {/* NATIVE AD */}
+            <div style={{ marginTop: '3.5rem', background: 'rgba(0,0,0,0.5)', borderRadius: '20px', padding: '2rem', textAlign: 'center', border: '1px dashed rgba(255,77,0,0.2)' }}>
+              <div style={{ fontSize: '0.6rem', opacity: 0.3, letterSpacing: '3px' }}>PROMOTED CONTENT</div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '8px' }}>[ 💰 Native Analysis Ad Unit ]</p>
+            </div>
           </section>
         </div>
 
         {/* 🛠️ ELITE TOOLBOX SECTION */}
         <section className="glass animate-enter" style={{ padding: '3rem', borderRadius: 'var(--radius)', marginBottom: '5rem', animationDelay: '0.3s' }}>
+          
+          {/* 💰 Toolbox Entry Ad */}
+          <div style={{ marginBottom: '3rem' }}>
+            <div className="glass" style={{ height: '90px', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(255,184,0,0.3)' }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem' }}>[ 💰 Toolbox Header Ad Unit ]</p>
+            </div>
+          </div>
+
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '3rem' }}><Settings size={28} color="var(--primary)" /><h2 style={{ fontSize: '1.75rem' }}>Elite Toolbox</h2></div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem' }}>
             
@@ -278,12 +306,14 @@ const App = () => {
                 <button className={`fix-aim-btn ${fixAimType === 'shake' ? 'active' : ''}`} onClick={()=>setFixAimType('shake')}><Crosshair size={18}/> Aim Shaking</button>
                 
                 {fixAimType && (
-                  <div className="animate-enter" style={{ marginTop: '1.5rem', padding: '1.25rem', background: 'rgba(255,255,255,0.05)', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                    <div style={{ color: 'var(--primary)', fontWeight: '800', fontSize: '0.7rem', textTransform: 'uppercase', marginBottom: '8px' }}>Tanglish Solution:</div>
-                    <p style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
-                      {fixAimType === 'overshoot' && "General settings romba adhigama irukku. Result-la irukkura number-le irundhu -2 or -3 points kammi pannunga. Drag panna space adhigama kudu-nga."}
-                      {fixAimType === 'body' && "Fire button size konjam kammi panni paarunga. Drag pannura speed-ah adhigam pannunga. Red dot settings-ah +5 points ethunga."}
-                      {fixAimType === 'shake' && "Phone cover loose-ah irukkunu paarunga. Sensitivity romba speed-ah irukku, matha settings lam correct-ah scan panni, general-ah -5 kammi pannunga."}
+                  <div className="animate-enter" style={{ marginTop: '1.5rem', padding: '1.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '14px', border: '1px solid var(--primary)' }}>
+                    <div style={{ color: 'var(--primary)', fontWeight: '800', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Zap size={14} /> Expert Solution:
+                    </div>
+                    <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: 'white' }}>
+                      {fixAimType === 'overshoot' && "Your General sensitivity is too high. Decrease it by 2-3 points from your current result. Ensure you have more physical screen space above your fire button to complete the drag motion."}
+                      {fixAimType === 'body' && "Try reducing your Fire Button size slightly. Increase your 'General' sensitivity by +5 points. Focus on a faster, more explosive flick when dragging upward."}
+                      {fixAimType === 'shake' && "Your general mobility settings are exceeding your device's touch sampling rate. Decrease 'General' by 5 points to stabilize the camera during intense movements."}
                     </p>
                   </div>
                 )}
