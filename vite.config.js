@@ -5,6 +5,15 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    allowedHosts: ["erica-delineative-jordan.ngrok-free.dev"]
+    allowedHosts: ["erica-delineative-jordan.ngrok-free.dev"],
+    proxy: {
+      // Proxy ban check API to avoid CORS — browser calls /api/bancheck, Vite forwards to thug4ff
+      '/api/bancheck': {
+        target: 'http://raw.thug4ff.xyz',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/bancheck/, '/check_ban'),
+        secure: false,
+      }
+    }
   }
 })
