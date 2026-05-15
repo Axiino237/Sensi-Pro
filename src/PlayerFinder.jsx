@@ -172,8 +172,8 @@ const PlayerFinder = ({ playSfx }) => {
       </header>
 
       <section className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius)', marginBottom: '3rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '15px', marginBottom: '20px' }}>
-          <div className="form-group">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '25px' }}>
+          <div className="form-group" style={{ marginBottom: 0 }}>
             <label>Player UID</label>
             <div style={{ position: 'relative' }}>
               <input 
@@ -187,20 +187,20 @@ const PlayerFinder = ({ playSfx }) => {
               <User size={20} style={{ position: 'absolute', left: '1.2rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--primary)' }} />
             </div>
           </div>
-          <div className="form-group">
+          <div className="form-group" style={{ marginBottom: 0 }}>
             <label>Region</label>
             <select value={region} onChange={(e) => setRegion(e.target.value)}>
               {regions.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
             </select>
           </div>
-          <div className="form-group">
+          <div className="form-group" style={{ marginBottom: 0 }}>
             <label>Game Mode</label>
             <select value={gamemode} onChange={(e) => setGamemode(e.target.value)}>
               <option value="br">Battle Royale</option>
               <option value="cs">Clash Squad</option>
             </select>
           </div>
-          <div className="form-group">
+          <div className="form-group" style={{ marginBottom: 0 }}>
             <label>Match Type</label>
             <select value={matchmode} onChange={(e) => setMatchmode(e.target.value)}>
               <option value="CAREER">Career</option>
